@@ -1,19 +1,23 @@
 const express  = require('express');
 const cors = require('cors');
+const { dbConnection } = require('../database/config');
 
 class Server{
 
     constructor(){
         this.app=express();
         this.port = process.env.PORT;
-        //this.usuariosPath = '/api/usuarios';
-        /*Middlewares : funcion que siempre se ejecutara al 
-        levantar nuestro servidor*/
-        //Rutas de mi aplicación
+        this.usuariosPath = '/api/usuarios';//Rutas de mi aplicación
+        this.conectarDB();
         this.middlewares();
         this.routes();
     }
+    async conectarDB(){
+        await dbConnection();
+    }
 
+    /*Middlewares : funcion que siempre se ejecutara al 
+    levantar nuestro servidor*/
     middlewares(){
         //CORS restringir origines , listas negras , blancas , algunos navegadores lo necesitan
         this.app.use(cors());
@@ -25,7 +29,7 @@ class Server{
 
     routes(){
         //Aplicando un middleware para las rutas , es como un middleware condicional
-        this.app.use('/api/usuarios',require('../routes/usuarios'));
+        this.app.use(this.usuariosPath,require('../routes/usuarios'));
     }
 
     listen(){
