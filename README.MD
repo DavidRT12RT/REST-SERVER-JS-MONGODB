@@ -1,2 +1,2 @@
 # Rest Server basico con express
-Este es un rest server basico construido con express 
+Este es un rest server que tiene una comunicacion con una base de datos MongoDB para tener un CRUD de usuarios, este es un ejercicio practico donde utilize Node.js , Express .
