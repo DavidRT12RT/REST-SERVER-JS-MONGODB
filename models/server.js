@@ -12,6 +12,7 @@ class Server{
         this.middlewares();
         this.routes();
     }
+
     async conectarDB(){
         await dbConnection();
     }
@@ -21,7 +22,9 @@ class Server{
     middlewares(){
         //CORS restringir origines , listas negras , blancas , algunos navegadores lo necesitan
         this.app.use(cors());
-        //Lectura y parseo del body
+        /*Lectura y parseo del body ,
+        le estamos diciendo que recibira formato json
+        cualquier cosa que llegue del fronted lo serializara en json*/
         this.app.use(express.json());
         //Directorio público
         this.app.use(express.static('public'));

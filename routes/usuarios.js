@@ -3,8 +3,14 @@ const { check } = require('express-validator');
 //Middleware personalizardo!
 const {validarCampos}= require('../middlewares/validar-campos');
 const {esRoleValido,emailExiste,usuarioExistePorId} = require('../helpers/db_validators');
-const { usuariosGet, usuariosPost, usuariosPut, usuariosDelete } = require('../controllers/usuarios');
-const router = Router(); //llamando la funcion
+const { usuariosGet, 
+        usuariosPost, 
+        usuariosPut, 
+        usuariosDelete } = require('../controllers/usuarios');
+
+
+const router = Router(); /*llamando la funcion , no estamos creando
+una instancia por que no lleva new */
 //Rutas de nuestro programa
 
 router.get('/',usuariosGet);

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'); // ODM : limpiara las querys , es mas facil que memorizar SQLS
+
 const dbConnection = async()=>{
     try{
         await mongoose.connect(process.env.MONGODB_CNN,{

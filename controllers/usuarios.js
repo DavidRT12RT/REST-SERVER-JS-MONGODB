@@ -39,10 +39,11 @@ const usuariosPut = async(req,res=response)=>{
 
     res.json(usuario);
     }
+
 const usuariosPost = async(req,res=response)=>{
   
     //Obtenemos el json que viene desde la web , tenemos que asegurarnos de limpiarlo por seguridad
-    let{nombre,correo,password,rol}=req.body;
+    let{nombre,correo,password,rol}=req.body;//destructurado de objecto json
     correo=correo.toLowerCase();
     const usuario = new Usuario({nombre,correo,password,rol});  
 
