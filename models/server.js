@@ -8,6 +8,7 @@ class Server{
         this.app=express();
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios';//Rutas de mi aplicación
+        this.authPath = '/api/auth';
         this.conectarDB();
         this.middlewares();
         this.routes();
@@ -31,7 +32,9 @@ class Server{
     }
 
     routes(){
+        //Definiendo las rutas!
         //Aplicando un middleware para las rutas , es como un middleware condicional
+        this.app.use(this.authPath,require('../routes/auth'));
         this.app.use(this.usuariosPath,require('../routes/usuarios'));
     }
 

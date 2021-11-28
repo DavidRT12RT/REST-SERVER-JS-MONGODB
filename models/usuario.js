@@ -37,11 +37,10 @@ const usuarioSchema = Schema({
         default:false
     }
 });
-//Reescribiendo el metodo json
+//Reescribiendo el metodo json para imprimir
 usuarioSchema.methods.toJSON = function(){
-    //Sacando la version y password
-    const {__v,password,...usuario} = this.toObject();
-    //Operador rest
+    const {__v,password,_id,...usuario} = this.toObject(); //Operador rest
+    usuario.uid=_id;
     return usuario
 }
 //Pedira el nombre del modelo a la cual le agregare una 's' y por ultimo el Schema

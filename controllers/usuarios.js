@@ -8,16 +8,18 @@ const Usuario = require('../models/usuario'); //Modelo para guardar en la coleci
 const usuariosGet = async (req=request,res=response)=>{
     //Obteniendo los parametros opcionales (/?)
     //const {q,nombre="No Name",apikey} = req.query;
-    //Los elementos que vienen de la query son strings
-    const {limite=5,desde=0} = req.query;
+    //Los elementos que vienen de la query siempre son strings
+    //const usuarios = await Usuario.find(); devuelve toda la coleccion de Usuarios
 
-    //Ejecutara ambas promesas de manera simultanea
-    const [total,usuarios]= await Promise.all([
-        Usuario.countDocuments({estado:true}),
-        Usuario.find({estado:true})
+    const {limite=5,desde=0} = req.query;
+    const query = {estado:true}
+    const [total,usuarios]= await Promise.all([ //Ejecutara ambas promesas de manera simultanea
+        Usuario.countDocuments(query),
+        Usuario.find(query)
             .skip(Number(desde))
             .limit(Number(limite))
     ]);
+    /* La respuesta es una coleccion de las promesas*/
     res.json({
         total,
         usuarios
@@ -36,19 +38,30 @@ const usuariosPut = async(req,res=response)=>{
         resto.password=bcryptjs.hashSync(password,salt);
     }
     const usuario = await Usuario.findByIdAndUpdate(id,resto);
+    //el metodo .findByIdAndUpdate aparte de encontrarlo tambien lo actualiza
 
     res.json(usuario);
     }
 
 const usuariosPost = async(req,res=response)=>{
-  
+    
     //Obtenemos el json que viene desde la web , tenemos que asegurarnos de limpiarlo por seguridad
     let{nombre,correo,password,rol}=req.body;//destructurado de objecto json
     correo=correo.toLowerCase();
     const usuario = new Usuario({nombre,correo,password,rol});  
-
+    /*Verificar si el correro existe 
+    const existeEmail = await Usuario.findOne({correo:correo});
+    if(!existeEmail){
+        continue...
+    }else{
+        return res.status(400).json({
+            msg:'El correo ya esta registrado!'
+        });
+        ya existe , hay que marcalo como error
+    }
+    */
     //Encriptar la contraseña
-    const salt=bcryptjs.genSaltSync();
+    const salt=bcryptjs.genSaltSync();//Primero hay que generar un salt 
     usuario.password=bcryptjs.hashSync(usuario.password,salt);
 
     //Guardar en base de datos
@@ -60,12 +73,9 @@ const usuariosPost = async(req,res=response)=>{
 
 const usuariosDelete = async(req,res=response)=>{
     const {id} = req.params;
-    //Fisicamente lo borramos
-    //const usuario = await Usuario.findByIdAndDelete(id);
+    //Fisicamente lo borramos const usuario = await Usuario.findByIdAndDelete(id);
     const usuario = await Usuario.findByIdAndUpdate(id,{estado:false});
-    res.json({
-        usuario
-        });
+    res.json(usuario);
     }
 module.exports={
     usuariosGet,
