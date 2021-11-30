@@ -13,7 +13,7 @@ const generarJWT = (uid = '') =>{//uid = User identifier
                 resolve(token);
             }
         })
-    })
+    });
 }
 
 module.exports={

@@ -30,7 +30,7 @@ const validarJWT =async(req=request,res=response,next)=>{
                msg:'Token no valido! -usuario con estado False'
            })
        }
-       req.usuario=usuario;
+       req.usuario=usuario;//Creando una nueva propiedad en la request llamada usuario
        next();
    } catch (error) {
        console.log(error);

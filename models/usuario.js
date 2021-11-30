@@ -40,7 +40,7 @@ const usuarioSchema = Schema({
 //Reescribiendo el metodo json para imprimir
 usuarioSchema.methods.toJSON = function(){
     const {__v,password,_id,...usuario} = this.toObject(); //Operador rest
-    usuario.uid=_id;
+    usuario.uid=_id;//creando una nueva propiedad llamada "uid" que viene de _id 
     return usuario
 }
 //Pedira el nombre del modelo a la cual le agregare una 's' y por ultimo el Schema
