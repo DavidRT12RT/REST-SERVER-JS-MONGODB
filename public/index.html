@@ -5,27 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sign-in</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-   <h1>Google Sign-in</h1> 
-   <hr>      
-    <div id="g_id_onload"
-         data-client_id="1074762109568-45ggd24h8dor0eb23oap51pivtgb32ar.apps.googleusercontent.com"
-         data-auto_prompt="false"
-         data-callback="handleCredentialResponse">
-    </div>
-    <div class="g_id_signin"
-        data-type="standard"
-        data-size="large"
-        data-theme="outline"
-        data-text="sign_in_with"
-        data-shape="rectangular"
-        data-logo_alignment="left">
-    </div>
-
-    <button id="google_signout">
-        Sign Out
-    </button>
+    <header>
+        <h1>Google Sign-in</h1> 
+        <hr>
+    </header>
+   
+   <div class="container">
+        <div id="g_id_onload"
+            data-client_id="1074762109568-45ggd24h8dor0eb23oap51pivtgb32ar.apps.googleusercontent.com"
+            data-auto_prompt="false"
+            data-callback="handleCredentialResponse">
+        </div>
+        <div class="g_id_signin"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="sign_in_with"
+            data-shape="rectangular"
+            data-logo_alignment="left">
+        </div>
+        <button id="google_signout">
+            Sign Out
+        </button>
+   </div>
 
    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
@@ -42,7 +47,7 @@
             },
             body:JSON.stringify(body)
         })
-            .then(res => res.json())
+            .then(res => res.json())//Transformando lo que llega como respuesta OK a json
             .then(res=>{
                 console.log(res)
                 localStorage.setItem('email',res.usuario.correo)
