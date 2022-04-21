@@ -15,7 +15,9 @@ class Server{
             categorias:'/api/categorias',
             usuarios:'/api/usuarios',
             productos:'/api/productos',
-            uploads:'/api/uploads'
+            uploads:'/api/uploads',
+            obras:'/api/obras',
+            inventario:'/api/inventario'
         };
         this.conectarDB();
         this.middlewares();
@@ -50,9 +52,14 @@ class Server{
         //Definiendo las rutas!
         //Aplicando un middleware para las rutas , es como un middleware condicional
         this.app.use(this.paths.auth,require('../routes/auth'));
-        this.app.use(this.paths.buscar,require('../routes/buscar'));
+        //this.app.use(this.paths.buscar,require('../routes/buscar'));
         this.app.use(this.paths.categorias,require('../routes/categorias'));
+
+        //---------------------Sanz Constructora----------------------
+        this.app.use(this.paths.obras,require('..routes/obras'));
         this.app.use(this.paths.usuarios,require('../routes/usuarios'));
+        this.app.use(this.paths.inventario,require('../routes/inventario'));
+        //-------------------------------------------------------------
         this.app.use(this.paths.productos,require('../routes/productos'));
         this.app.use(this.paths.uploads,require('../routes/uploads'));
     }
