@@ -11,7 +11,11 @@ const ProductoSchema = Schema({
         default:true,
         required:true
     },
-    usuario:{
+    cantidad:{
+        type:String,
+        default:1,
+    },
+    usuarioCreador:{
         type:Schema.Types.ObjectId,
         ref:'Usuario',
         required:true

@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const {check} = require('express-validator');
-const { validarJWT, validarCampos, esAdminRole} = require('../middlewares');
+const { validarJWT, validarCampos, esAdminRole, tieneRole} = require('../middlewares');
 const {crearCategoria,
     obtenerCategorias,
     obtenerCategoria,
@@ -10,10 +10,16 @@ const {existeCategoria} = require('../helpers/db_validators');
 const router = Router();
 
 //Obtener todas las categorias -publico
-router.get('/',obtenerCategorias);
+router.get('/',[
+    validarJWT,
+    tieneRole('ADMIN_ROLE','USER_ROLE'),
+    validarCampos
+],obtenerCategorias);
 
 //Obtener una categoria en particular por id - publico
 router.get('/:id',[
+    validarJWT,
+    tieneRole('ADMIN_ROLE','USER_ROLE'),
     check('id','No es un ID valido!').isMongoId(),
     check('id').custom(existeCategoria),
     validarCampos
@@ -22,6 +28,7 @@ router.get('/:id',[
 //Crear una nueva categoria - privado - cualquier persona con un token valido
 router.post('/',[
     validarJWT,
+    esAdminRole,
     check('nombre','El nombre es obligatorio!').not().isEmpty(),
     validarCampos
 ],crearCategoria);
@@ -29,6 +36,7 @@ router.post('/',[
 //Actualizar - privado -cualquiera con token valido
 router.put('/:id',[
     validarJWT,
+    esAdminRole,
     check('nombre','Nombre obligatorio!').not().isEmpty(),
     check('id').custom(existeCategoria),
     validarCampos

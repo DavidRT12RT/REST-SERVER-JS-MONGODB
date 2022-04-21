@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const {check} = require('express-validator');
-const {validarJWT, validarCampos, esAdminRole} = require('../middlewares');
+const {validarJWT, validarCampos, esAdminRole, tieneRole} = require('../middlewares');
 const {existeProducto,existeCategoria} = require('../helpers/db_validators');
 const router = Router();//Llamando a la funcion no estamos creando una instancia por que tendria que llevar new
 
@@ -9,6 +9,8 @@ const {obtenerProductos,obtenerProducto,crearProducto,actualizarProducto,borrarP
 router.get('/',obtenerProductos);
 
 router.get('/:id',[
+    validarJWT,
+    tieneRole,
     check('id','El ID es requerido').not().isEmpty(),
     check('id','No es un ID valido!').isMongoId(),
     check('id').custom(existeProducto),

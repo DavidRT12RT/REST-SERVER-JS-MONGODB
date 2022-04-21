@@ -9,7 +9,7 @@ const crearProducto=async(req,res=response)=>{
     const existeProducto = await Producto.findOne({nombre:body.nombre});
     if(existeProducto){
         return res.status(400).json({
-            msg:'El producto ya existe!'
+            msg:'El producto ya existe!, si quieres agregar existencia a un producto es en el apartado de [Actualizar!]'
         });
     }
     //Generando la data si el producto NO existe

@@ -20,6 +20,10 @@ const usuarioSchema = Schema({
         type:String,
         required:[true,"La contraseña es obligatoria!"],
     },
+    telefono:{
+        type:String,
+        unique:true
+    },
     //Imagenes
     img:{
         //URL de la imagen del usuario
